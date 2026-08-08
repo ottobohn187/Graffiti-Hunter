@@ -1,0 +1,4 @@
+Options -Indexes
+<Files "import_walk.php">
+  Require all denied
+</Files>
