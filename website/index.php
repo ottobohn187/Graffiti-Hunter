@@ -1,12 +1,3 @@
-<?php
-session_start();
-$signedIn = !empty($_SESSION['gh_user_id']);
-$flash = isset($_SESSION['gh_flash']) ? $_SESSION['gh_flash'] : '';
-$flashType = isset($_SESSION['gh_flash_type']) ? $_SESSION['gh_flash_type'] : 'info';
-unset($_SESSION['gh_flash'], $_SESSION['gh_flash_type']);
-$token = bin2hex(random_bytes(24));
-$_SESSION['gh_csrf'] = $token;
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,6 +10,7 @@ $_SESSION['gh_csrf'] = $token;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/site.css">
+  <style>.about{padding:95px clamp(24px,12vw,190px);background:#e8e4d9;border-top:1px solid #cbd2cc}.about h2{font:800 clamp(48px,6vw,86px)/.9 'Barlow Condensed';text-transform:uppercase;margin:18px 0}.about > p:last-child{max-width:850px;color:#607068;font-size:18px;line-height:1.75}</style>
 </head>
 <body>
   <header class="site-header">
@@ -28,8 +20,7 @@ $_SESSION['gh_csrf'] = $token;
     </a>
     <nav aria-label="Main navigation">
       <a href="#how">How it works</a>
-      <a href="#tracker">Walk tracker</a>
-      <a class="nav-login" href="#login"><?php echo $signedIn ? 'Dashboard' : 'Log in'; ?></a>
+      <a class="nav-login" href="#about">About the app</a>
     </nav>
   </header>
 
@@ -43,11 +34,11 @@ $_SESSION['gh_csrf'] = $token;
         <h1>See it.<br><em>Map it.</em><br>Get it done.</h1>
         <p class="hero-intro">A home-made Android field tool that turns every graffiti photo into an organized reporting package—with GPS, map, timestamp, address, and evidence ready for review.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#login">Open your tracker</a>
+          <a class="button primary" href="#how">See how it works</a>
           <a class="button ghost" href="#how">Explore the process</a>
         </div>
         <div class="hero-stats">
-          <div><strong>10 sec</strong><span>Walk GPS samples</span></div>
+          <div><strong>GPS + map</strong><span>Location evidence</span></div>
           <div><strong>1 tap</strong><span>Capture workflow</span></div>
           <div><strong>Local first</strong><span>You control the queue</span></div>
         </div>
@@ -81,42 +72,12 @@ $_SESSION['gh_csrf'] = $token;
       </div>
     </section>
 
-    <section class="tracker" id="tracker">
-      <div class="tracker-art" aria-hidden="true">
-        <div class="route"></div><span class="route-dot one"></span><span class="route-dot two"></span><span class="route-dot three"></span><span class="route-dot four"></span>
-        <div class="tracker-chip">WALK TRACK · 42 POINTS</div>
-      </div>
-      <div class="tracker-copy"><p class="eyebrow"><span></span> Coming next</p><h2>Turn a walk into a map.</h2><p>The Android app already records timestamped latitude and longitude samples every ten seconds. The private tracker will import those CSV files and draw your route, capture points, and field-work history on an interactive map.</p><ul><li>Private route history</li><li>Capture locations layered on the walk</li><li>CSV import and map export</li><li>Submission progress at a glance</li></ul></div>
-    </section>
-
-    <section class="login-section" id="login">
-      <div class="login-message"><p class="eyebrow dark"><span></span> Private field dashboard</p><h2>Keep the hunt organized.</h2><p>Sign in to save and track your work. New team member? Create an account below—the dashboard foundation is ready for the upcoming map importer.</p><div class="privacy-note"><b>Your data stays yours.</b><br>Passwords are securely hashed. Captures are never submitted without your approval.</div></div>
-      <div class="auth-card">
-        <?php if($flash): ?><div class="flash <?php echo htmlspecialchars($flashType, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($flash, ENT_QUOTES, 'UTF-8'); ?></div><?php endif; ?>
-        <?php if($signedIn): ?>
-          <h3>Welcome back</h3><p>You are signed in and ready to review your field dashboard.</p>
-          <a class="button primary full" href="dashboard.php">Open dashboard</a>
-          <a class="text-link" href="logout.php">Sign out</a>
-        <?php else: ?>
-          <div class="auth-tabs" role="tablist"><button class="active" data-panel="login-panel" type="button">Log in</button><button data-panel="register-panel" type="button">Create account</button></div>
-          <form id="login-panel" class="auth-panel active" action="auth.php" method="post">
-            <input type="hidden" name="csrf" value="<?php echo $token; ?>"><input type="hidden" name="action" value="login">
-            <label>Email address<input type="email" name="email" autocomplete="email" required></label>
-            <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
-            <button class="button primary full" type="submit">Log in securely</button>
-          </form>
-          <form id="register-panel" class="auth-panel" action="auth.php" method="post">
-            <input type="hidden" name="csrf" value="<?php echo $token; ?>"><input type="hidden" name="action" value="register">
-            <label>Your name<input type="text" name="name" maxlength="100" autocomplete="name" required></label>
-            <label>Email address<input type="email" name="email" autocomplete="email" required></label>
-            <label>Password <small>12 characters minimum</small><input type="password" name="password" minlength="12" autocomplete="new-password" required></label>
-            <button class="button primary full" type="submit">Create private account</button>
-          </form>
-        <?php endif; ?>
-      </div>
+    <section class="about" id="about">
+      <p class="eyebrow dark"><span></span> Built for practical field work</p>
+      <h2>Capture fast. Review carefully.</h2>
+      <p>Graffiti Hunter keeps approved photos and their reporting details together on the phone. Review the image, map, coordinates, timestamp, and category before preparing the City of San Diego report. You remain in control of the final submission.</p>
     </section>
   </main>
   <footer><a class="brand" href="#top"><span class="brand-mark">GH</span><span>GRAFFITI HUNTER</span></a><p>Graffiti Hunter Build 0.5.6 Beta · Home-made in San Diego.</p><p>This independent project is not affiliated with the City of San Diego.</p></footer>
-  <script src="assets/site.js"></script>
 </body>
 </html>
