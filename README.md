@@ -1,14 +1,13 @@
-# Graffiti Hunter
+# Hunter Android apps
 
-Community reporting tools for quickly capturing, packaging, reviewing, and
-preparing location-based reports for San Diego Get It Done.
+The canonical, standalone Android sources for Graffiti Hunter and Dumpster
+Hunter. Both apps use native Android Camera2 and do not contain or launch Unity.
 
-## Android applications
+## Applications
 
-- `DumpsterHunter/NativeAndroid` — current standalone Dumpster Hunter Android
-  app. This is a native Camera2 build and does not include or launch Unity.
-- `Assets/GraffitiHunter` — the earlier Graffiti Hunter Unity project retained
-  for history while the standalone Android migration is maintained separately.
+- `GraffitiHunter/NativeAndroid` — Graffiti Hunter 0.5.7.
+- `DumpsterHunter/NativeAndroid` — Dumpster Hunter 0.3.0.
+- `website` — the public [GraffitiHunter.net](https://graffitihunter.net/) site.
 
-Compiled Android releases are published in the repository's GitHub Releases
-section and linked from [GraffitiHunter.net](https://graffitihunter.net/).
+Each Android project includes its own Gradle wrapper. Compiled APKs are
+published in GitHub Releases rather than committed as generated build output.
