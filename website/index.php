@@ -25,7 +25,7 @@
       <a href="#mission">Mission</a>
       <a href="#capture">Capture options</a>
       <a href="#dumpster-hunter">Dumpster Hunter</a>
-      <a class="nav-download" href="downloads/GraffitiHunter-0.5.7-standalone.apk" download>Download APK</a>
+      <a class="nav-download" href="downloads/GraffitiHunter-0.5.8-standalone.apk" download>Download APK</a>
     </nav>
   </header>
 
@@ -36,10 +36,10 @@
         <h1>Capture.<br><em>Map.</em><br>Help.</h1>
         <p class="hero-intro">Graffiti Hunter turns field photos into organized reporting packages—with GPS coordinates, a location map, timestamps, categories, and evidence ready for your review.</p>
         <div class="hero-actions">
-          <a class="button primary" href="downloads/GraffitiHunter-0.5.7-standalone.apk" download>Download Android APK</a>
+          <a class="button primary" href="downloads/GraffitiHunter-0.5.8-standalone.apk" download>Download Android APK</a>
           <a class="button secondary" href="#capture">See capture options</a>
         </div>
-        <p class="download-note">Build 0.5.6 Beta · Direct Android installation · approximately 54 MB</p>
+        <p class="download-note">Build 0.5.8 Beta · Standalone Android installation · approximately 8 MB · No Unity required</p>
       </div>
       <div class="hero-mark">
         <div class="logo-halo"></div>
@@ -105,21 +105,21 @@
         <div class="companion-points">
           <span>Native phone camera</span><span>GPS and location map</span><span>Organized review queue</span><span>Rotation-resilient review</span>
         </div>
-        <a class="button dump-button" href="downloads/DumpsterHunter-0.3.0-standalone.apk" download>Download Dumpster Hunter</a>
-        <small>Version 0.3.0 Beta · Standalone Android APK · approximately 17 MB · No Unity required</small>
+        <a class="button dump-button" href="downloads/DumpsterHunter-0.3.1-standalone.apk" download>Download Dumpster Hunter</a>
+        <small>Version 0.3.1 Beta · Standalone Android APK · approximately 17 MB · No Unity required</small>
       </div>
     </section>
 
     <section class="download-panel">
       <img src="assets/graffiti-hunter-logo.png" alt="">
       <div><p class="eyebrow"><span></span> Ready for field testing</p><h2>Put Graffiti Hunter on your Android phone.</h2><p>This is an independent beta build. Android may ask you to allow installation from your browser or file manager.</p></div>
-      <a class="button primary" href="downloads/GraffitiHunter-0.5.7-standalone.apk" download>Download APK</a>
+      <a class="button primary" href="downloads/GraffitiHunter-0.5.8-standalone.apk" download>Download APK</a>
     </section>
   </main>
 
   <footer>
     <a class="brand" href="#top"><img src="assets/graffiti-hunter-logo.png" alt=""><span>GRAFFITI HUNTER</span></a>
-    <p>Build 0.5.6 Beta · Home-made in San Diego.</p>
+    <p>Build 0.5.8 Beta · Home-made in San Diego.</p>
     <p>This independent project is not affiliated with the City of San Diego.</p>
   </footer>
 </body>

@@ -134,8 +134,7 @@ public class DumpSubmissionActivity extends Activity {
     private void fillFormFields() {
         if (prepared || isFinishing()) return;
         prepared = true;
-        String lat = extra("latitude");
-        String lon = extra("longitude");
+        String address = extra("streetAddress");
         String issue = extra("dumpingIssue");
         String rightOfWay = extra("publicRightOfWay");
         String privateProperty = extra("privateProperty");
@@ -151,6 +150,18 @@ public class DumpSubmissionActivity extends Activity {
             "function fill(){" +
             "function setv(id,v){var e=document.getElementById(id);if(!e)return;e.value=v;" +
             "e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));}" +
+            "function addressLookup(v){var e=document.getElementById('pac-inputt');if(!e||!v)return;setv('pac-inputt',v);" +
+            "if(window.__hunterAddressLookupStarted)return;window.__hunterAddressLookupStarted=true;" +
+            "function fallback(){window.__hunterAddressLookupStarted=false;setv('pac-inputt',v);enter(e);}" +
+            "try{if(!(window.google&&google.maps&&google.maps.Geocoder)){fallback();return;}" +
+            "new google.maps.Geocoder().geocode({address:v},function(results,status){" +
+            "if(status!=='OK'||!results||!results.length){fallback();return;}var p=results[0],g=p.geometry.location;" +
+            "e.value=p.formatted_address||v;setv('pgid:fmId:AddressId',e.value);" +
+            "setv('pgid:fmId:LatitudeId',String(g.lat()));setv('pgid:fmId:LongitudeId',String(g.lng()));" +
+            "try{previewLat=g.lat();previewLang=g.lng();navigatorlocation=e.value;IsplaceChange=true;Isdefaultloc='false';cityValidatedStatus='';" +
+            "if(marker)marker.setPosition(g);if(map){map.setCenter(g);map.setZoom(16);}if(checkBounds(g)){inside();}else{outside();}" +
+            "if(window.populateAddress)populateAddress(p);}catch(x){}window.__hunterAddressConfirmed=true;" +
+            "e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(x){fallback();}}" +
             "function enter(e){if(!e)return;e.focus();['keydown','keypress','keyup'].forEach(function(t){" +
             "var k=new KeyboardEvent(t,{key:'Enter',code:'Enter',keyCode:13,which:13,bubbles:true});" +
             "try{Object.defineProperty(k,'keyCode',{get:function(){return 13;}});" +
@@ -161,12 +172,9 @@ public class DumpSubmissionActivity extends Activity {
             "e.selectedIndex=i;e.options[i].selected=true;break;}}" +
             "e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));" +
             "try{if(answerKey&&window.SelectedAns)window.SelectedAns(answerKey);}catch(x){}return e.value===v;}" +
-            // Coordinates are more precise than a reverse-geocoded mailing address
-            // and let Get It Done place its map pin at the actual captured location.
-            "setv('pac-inputt'," + q(lat + ", " + lon) + ");" +
-            "setTimeout(function(){enter(document.getElementById('pac-inputt'));},350);" +
-            "setv('pgid:fmId:LatitudeId'," + q(lat) + ");" +
-            "setv('pgid:fmId:LongitudeId'," + q(lon) + ");" +
+            // Get It Done now requires a street address rather than raw coordinates.
+            // The original coordinates remain in the description and marked map.
+            "addressLookup(" + q(address) + ");" +
             "sets('IllegalIssue'," + q(issue) + ",'IllegalIssue');" +
             "sets('IllegalROW'," + q(rightOfWay) + ",'IllegalROW');" +
             "if(" + q(rightOfWay) + "==='No')sets('privatePropertyPicklist'," + q(privateProperty) + ",'privatePropertyPicklist');" +
@@ -217,7 +225,7 @@ public class DumpSubmissionActivity extends Activity {
     private static String withProjectLink(String description) {
         if (description.toLowerCase(java.util.Locale.US).contains("graffitihunter.net")) return description;
         String separator = description.trim().isEmpty() ? "" : "\n\n";
-        return description + separator + "Submitted by Dumpster Hunter Build 0.3.0 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.";
+        return description + separator + "Submitted by Dumpster Hunter Build 0.3.1 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.";
     }
 
     private static String q(String value) {

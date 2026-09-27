@@ -188,7 +188,7 @@ public class NativeQueueActivity extends Activity {
             String desc = String.format(Locale.US,
                 "Graffiti on/at a %s. %s. GPS coordinates at capture: %.7f, %.7f. " +
                 "Photo and marked location map are attached. " +
-                "Submitted by Graffiti Hunter Build 0.5.7 GraffitiHunter.net.",
+                "Submitted by Graffiti Hunter Build 0.5.8 GraffitiHunter.net.",
                 type, place, lat, lon);
             report.put("suggestedDescription", desc);
             report.put("exactLocationDescription", String.format(Locale.US,
@@ -207,12 +207,18 @@ public class NativeQueueActivity extends Activity {
 
     private void prepareOfficialForm() {
         if (!saveCurrent() || report == null) return;
-        if (report.optString("streetAddress", "").trim().isEmpty()) {
+        if (!hasUsableStreetAddress(report.optString("streetAddress", ""))) {
             Toast.makeText(this, "Resolving the nearby street address...", Toast.LENGTH_SHORT).show();
             new Thread(() -> {
                 String resolved = resolveStreetAddress();
                 runOnUiThread(() -> {
-                    try { if (!resolved.isEmpty()) report.put("streetAddress", resolved); }
+                    if (resolved.isEmpty()) {
+                        Toast.makeText(this,
+                            "Could not convert this GPS location to a street address. Check your connection and try Prepare again.",
+                            Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    try { report.put("streetAddress", resolved); }
                     catch (Exception ignored) { }
                     saveCurrent();
                     launchOfficialForm();
@@ -221,6 +227,12 @@ public class NativeQueueActivity extends Activity {
             return;
         }
         launchOfficialForm();
+    }
+
+    private boolean hasUsableStreetAddress(String value) {
+        String address = value == null ? "" : value.trim();
+        if (address.isEmpty()) return false;
+        return !address.matches("^-?\\d+(?:\\.\\d+)?\\s*,\\s*-?\\d+(?:\\.\\d+)?$");
     }
 
     private void launchOfficialForm() {
