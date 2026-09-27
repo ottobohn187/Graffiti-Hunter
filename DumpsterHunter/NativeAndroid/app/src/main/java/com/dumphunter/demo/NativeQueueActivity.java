@@ -41,12 +41,14 @@ public class NativeQueueActivity extends Activity {
     private static final String[] ISSUES = { "[SELECT DUMPING TYPE]", "Bulky Items", "Other" };
     private static final String[] RIGHT_OF_WAY = { "Yes", "No" };
     private static final String[] PRIVATE_PROPERTY = { "Not Sure", "Yes", "No" };
+    private static final String[] VIDEO_EVIDENCE = { "No", "Yes" };
     private final List<File> folders = new ArrayList<>();
     private int index;
     private JSONObject report;
     private Spinner category;
     private Spinner rightOfWay;
     private Spinner privateProperty;
+    private Spinner videoEvidence;
     private TextView count;
     private TextView details;
     private TextView description;
@@ -120,6 +122,10 @@ public class NativeQueueActivity extends Activity {
         page.addView(text("PUBLIC RIGHT-OF-WAY?       PRIVATE PROPERTY?", 12, true), full(dp(24)));
         page.addView(property, full(dp(54)));
 
+        page.addView(text("VIDEO OR SECURITY FOOTAGE TO SHARE?", 12, true), full(dp(24)));
+        videoEvidence = whiteSpinner(VIDEO_EVIDENCE);
+        page.addView(videoEvidence, full(dp(48)));
+
         LinearLayout edit = new LinearLayout(this);
         Button update = button("UPDATE PACKAGE"); update.setOnClickListener(v -> saveCurrent());
         edit.addView(update, new LinearLayout.LayoutParams(-1, dp(48)));
@@ -163,6 +169,8 @@ public class NativeQueueActivity extends Activity {
             rightOfWay.setSelection(row < 0 ? 0 : row);
             int privateIndex = Arrays.asList(PRIVATE_PROPERTY).indexOf(report.optString("privateProperty", "Not Sure"));
             privateProperty.setSelection(privateIndex < 0 ? 0 : privateIndex);
+            int videoIndex = Arrays.asList(VIDEO_EVIDENCE).indexOf(report.optString("videoEvidence", "No"));
+            videoEvidence.setSelection(videoIndex < 0 ? 0 : videoIndex);
             description.setText(report.optString("suggestedDescription", ""));
             File photoFile = new File(folder, report.optString("photoFile", ""));
             photo.setImageBitmap(BitmapFactory.decodeFile(photoFile.getAbsolutePath()));
@@ -183,20 +191,23 @@ public class NativeQueueActivity extends Activity {
             }
             String row = String.valueOf(rightOfWay.getSelectedItem());
             String privateValue = String.valueOf(privateProperty.getSelectedItem());
+            String videoValue = String.valueOf(videoEvidence.getSelectedItem());
             report.put("locationType", type);
             report.put("dumpingIssue", type);
             report.put("publicRightOfWay", row);
             report.put("privateProperty", privateValue);
+            report.put("videoEvidence", videoValue);
             double lat = report.optDouble("estimatedTargetLatitude", report.optDouble("cameraLatitude", 0));
             double lon = report.optDouble("estimatedTargetLongitude", report.optDouble("cameraLongitude", 0));
             String address = report.optString("streetAddress", "");
             String place = address.trim().isEmpty() ? "Possible address not yet available" : "Possible address: " + address;
             String desc = String.format(Locale.US,
-                "Illegal dumping (%s). Public right-of-way: %s. Private property: %s. %s. " +
+                "Illegal dumping (%s). Public right-of-way: %s. Private property: %s. " +
+                "Video/security footage available: %s. %s. " +
                 "GPS coordinates at capture: %.7f, %.7f. " +
                 "Photo and marked location map are attached. " +
-                "Submitted by Dumpster Hunter Build 0.3.1 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.",
-                type, row, privateValue, place, lat, lon);
+                "Submitted by Dumpster Hunter Build 0.3.2 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.",
+                type, row, privateValue, videoValue, place, lat, lon);
             report.put("suggestedDescription", desc);
             report.put("exactLocationDescription", String.format(Locale.US,
                 "%s. Map pin: %.7f, %.7f. Look for the location marked by the red arrow.", place, lat, lon));
@@ -251,6 +262,7 @@ public class NativeQueueActivity extends Activity {
         form.putExtra("dumpingIssue", report.optString("dumpingIssue", "Bulky Items"));
         form.putExtra("publicRightOfWay", report.optString("publicRightOfWay", "Yes"));
         form.putExtra("privateProperty", report.optString("privateProperty", "Not Sure"));
+        form.putExtra("videoEvidence", report.optString("videoEvidence", "No"));
         form.putExtra("description", report.optString("suggestedDescription", ""));
         form.putExtra("locationDescription", report.optString("exactLocationDescription", ""));
         form.putExtra("photoPath", new File(folder, report.optString("photoFile", "")).getAbsolutePath());

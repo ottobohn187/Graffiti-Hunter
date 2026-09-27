@@ -58,7 +58,7 @@ public class HunterHomeActivity extends Activity {
         brand.addView(title, titleParams);
         page.addView(brand, full(dp(118)));
 
-        TextView build = label("BUILD 0.3.1", 13, true);
+        TextView build = label("BUILD 0.3.2", 13, true);
         build.setTextColor(Color.rgb(172, 184, 194));
         page.addView(build, full(dp(25)));
         TextView tagline = label("CAPTURE  •  MAP  •  REPORT", 12, true);

@@ -105,8 +105,8 @@
         <div class="companion-points">
           <span>Native phone camera</span><span>GPS and location map</span><span>Organized review queue</span><span>Rotation-resilient review</span>
         </div>
-        <a class="button dump-button" href="downloads/DumpsterHunter-0.3.1-standalone.apk" download>Download Dumpster Hunter</a>
-        <small>Version 0.3.1 Beta · Standalone Android APK · approximately 17 MB · No Unity required</small>
+        <a class="button dump-button" href="downloads/DumpsterHunter-0.3.2-standalone.apk" download>Download Dumpster Hunter</a>
+        <small>Version 0.3.2 Beta · Standalone Android APK · approximately 17 MB · No Unity required</small>
       </div>
     </section>
 

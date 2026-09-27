@@ -284,7 +284,7 @@ public class NativeCaptureReviewActivity extends Activity {
         int clampedY = Math.max(0, Math.min(n - 1, y));
         HttpURLConnection connection = (HttpURLConnection)new URL(
             "https://tile.openstreetmap.org/" + zoom + "/" + wrappedX + "/" + clampedY + ".png").openConnection();
-        connection.setRequestProperty("User-Agent", "DumpsterHunter/0.3.1 (graffitihunter.net)");
+        connection.setRequestProperty("User-Agent", "DumpsterHunter/0.3.2 (graffitihunter.net)");
         connection.setConnectTimeout(10000); connection.setReadTimeout(10000);
         try (InputStream in = connection.getInputStream()) {
             return BitmapFactory.decodeStream(in);
@@ -297,10 +297,11 @@ public class NativeCaptureReviewActivity extends Activity {
         String captureTime = capturedUtc == null ? utc("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") : capturedUtc;
         String place = "Possible address not yet available";
         String description = String.format(Locale.US,
-            "Illegal dumping (Bulky Items). Public right-of-way: Yes. Private property: Not Sure. %s. " +
+            "Illegal dumping (Bulky Items). Public right-of-way: Yes. Private property: Not Sure. " +
+            "Video/security footage available: No. %s. " +
             "GPS coordinates at capture: %.7f, %.7f. " +
             "Photo and marked location map are attached. " +
-            "Submitted by Dumpster Hunter Build 0.3.1 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.",
+            "Submitted by Dumpster Hunter Build 0.3.2 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.",
             place, latitude, longitude);
         JSONObject report = new JSONObject();
         report.put("id", id); report.put("capturedUtc", captureTime);
@@ -315,7 +316,8 @@ public class NativeCaptureReviewActivity extends Activity {
         report.put("approvedUtc", finalApproval ? utc("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") : "");
         report.put("getItDoneCategory", "Illegal Dumping"); report.put("locationType", "Bulky Items");
         report.put("dumpingIssue", "Bulky Items"); report.put("publicRightOfWay", "Yes");
-        report.put("privateProperty", "Not Sure"); report.put("digitalZoom", 1.0);
+        report.put("privateProperty", "Not Sure"); report.put("videoEvidence", "No");
+        report.put("digitalZoom", 1.0);
         report.put("getItDoneFormUrl", "https://getitdone.sandiego.gov/TSWNewReport?type=Illegal%20Dumping");
         report.put("suggestedDescription", description);
         report.put("exactLocationDescription", String.format(Locale.US,

@@ -138,6 +138,7 @@ public class DumpSubmissionActivity extends Activity {
         String issue = extra("dumpingIssue");
         String rightOfWay = extra("publicRightOfWay");
         String privateProperty = extra("privateProperty");
+        String videoEvidence = extra("videoEvidence");
         String description = withProjectLink(extra("description"));
         String locationDescription = extra("locationDescription");
         String photoBase64 = encodeFile(extra("photoPath"));
@@ -172,15 +173,22 @@ public class DumpSubmissionActivity extends Activity {
             "e.selectedIndex=i;e.options[i].selected=true;break;}}" +
             "e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));" +
             "try{if(answerKey&&window.SelectedAns)window.SelectedAns(answerKey);}catch(x){}return e.value===v;}" +
+            "function setVideoEvidence(v){var yes=v==='Yes',e=document.getElementById('IllegalVideoFootage');" +
+            "if(e){e.checked=yes;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));}" +
+            "setv('pgid:fmId:IllegalVideoFootageHiddenId',yes?'true':'false');" +
+            "try{if(window.syncIllegalVideoFootage)syncIllegalVideoFootage(yes);" +
+            "if(window.toggleIllegalVideoMessage)toggleIllegalVideoMessage(yes);}catch(x){}}" +
             // Get It Done now requires a street address rather than raw coordinates.
             // The original coordinates remain in the description and marked map.
             "addressLookup(" + q(address) + ");" +
             "sets('IllegalIssue'," + q(issue) + ",'IllegalIssue');" +
             "sets('IllegalROW'," + q(rightOfWay) + ",'IllegalROW');" +
             "if(" + q(rightOfWay) + "==='No')sets('privatePropertyPicklist'," + q(privateProperty) + ",'privatePropertyPicklist');" +
+            "setVideoEvidence(" + q(videoEvidence) + ");" +
             "setTimeout(function(){sets('IllegalIssue'," + q(issue) + ",'IllegalIssue');" +
             "sets('IllegalROW'," + q(rightOfWay) + ",'IllegalROW');" +
             "if(" + q(rightOfWay) + "==='No')sets('privatePropertyPicklist'," + q(privateProperty) + ",'privatePropertyPicklist');},650);" +
+            "setTimeout(function(){setVideoEvidence(" + q(videoEvidence) + ");},650);" +
             "setv('pgid:fmId:FormDescriptonId'," + q(description) + ");" +
             "setv('pgid:fmId:FormLocDescriptonId'," + q(locationDescription) + ");" +
             "var input=document.getElementById('fileupload');if(input&&window.DataTransfer&&!window.__dumpingHunterFilesAttached){" +
@@ -225,7 +233,7 @@ public class DumpSubmissionActivity extends Activity {
     private static String withProjectLink(String description) {
         if (description.toLowerCase(java.util.Locale.US).contains("graffitihunter.net")) return description;
         String separator = description.trim().isEmpty() ? "" : "\n\n";
-        return description + separator + "Submitted by Dumpster Hunter Build 0.3.1 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.";
+        return description + separator + "Submitted by Dumpster Hunter Build 0.3.2 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.";
     }
 
     private static String q(String value) {
