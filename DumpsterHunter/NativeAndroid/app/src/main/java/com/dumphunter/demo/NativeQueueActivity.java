@@ -206,7 +206,7 @@ public class NativeQueueActivity extends Activity {
                 "Video/security footage available: %s. %s. " +
                 "GPS coordinates at capture: %.7f, %.7f. " +
                 "Photo and marked location map are attached. " +
-                "Submitted by Dumpster Hunter Build 0.3.2 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.",
+                "Submitted by Dumpster Hunter Build 0.3.3 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.",
                 type, row, privateValue, videoValue, place, lat, lon);
             report.put("suggestedDescription", desc);
             report.put("exactLocationDescription", String.format(Locale.US,

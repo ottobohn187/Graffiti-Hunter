@@ -153,16 +153,27 @@ public class DumpSubmissionActivity extends Activity {
             "e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));}" +
             "function addressLookup(v){var e=document.getElementById('pac-inputt');if(!e||!v)return;setv('pac-inputt',v);" +
             "if(window.__hunterAddressLookupStarted)return;window.__hunterAddressLookupStarted=true;" +
-            "function fallback(){window.__hunterAddressLookupStarted=false;setv('pac-inputt',v);enter(e);}" +
-            "try{if(!(window.google&&google.maps&&google.maps.Geocoder)){fallback();return;}" +
+            "function geocodeFallback(){if(window.__hunterAddressConfirmed)return;" +
+            "try{if(!(window.google&&google.maps&&google.maps.Geocoder)){window.__hunterAddressLookupStarted=false;return;}" +
             "new google.maps.Geocoder().geocode({address:v},function(results,status){" +
-            "if(status!=='OK'||!results||!results.length){fallback();return;}var p=results[0],g=p.geometry.location;" +
+            "if(status!=='OK'||!results||!results.length){window.__hunterAddressLookupStarted=false;return;}var p=results[0],g=p.geometry.location;" +
             "e.value=p.formatted_address||v;setv('pgid:fmId:AddressId',e.value);" +
             "setv('pgid:fmId:LatitudeId',String(g.lat()));setv('pgid:fmId:LongitudeId',String(g.lng()));" +
             "try{previewLat=g.lat();previewLang=g.lng();navigatorlocation=e.value;IsplaceChange=true;Isdefaultloc='false';cityValidatedStatus='';" +
             "if(marker)marker.setPosition(g);if(map){map.setCenter(g);map.setZoom(16);}if(checkBounds(g)){inside();}else{outside();}" +
             "if(window.populateAddress)populateAddress(p);}catch(x){}window.__hunterAddressConfirmed=true;" +
-            "e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(x){fallback();}}" +
+            "e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(x){window.__hunterAddressLookupStarted=false;}}" +
+            "setTimeout(function(){var items=[].slice.call(document.querySelectorAll('.pac-container .pac-item'));" +
+            "var first=items.find(function(x){var r=x.getBoundingClientRect();return r.width>0&&r.height>0;});" +
+            "if(first){first.dispatchEvent(new MouseEvent('mousedown',{bubbles:true}));" +
+            "first.dispatchEvent(new MouseEvent('mouseup',{bubbles:true}));first.click();" +
+            "setTimeout(function(){var a=document.getElementById('pgid:fmId:AddressId');" +
+            "var la=document.getElementById('pgid:fmId:LatitudeId');if(a&&a.value&&la&&la.value)window.__hunterAddressConfirmed=true;},450);}" +
+            "else{sendKey(e,'ArrowDown',40);setTimeout(function(){enter(e);},120);}},650);" +
+            "setTimeout(geocodeFallback,1800);}" +
+            "function sendKey(e,key,code){if(!e)return;['keydown','keypress','keyup'].forEach(function(t){" +
+            "var k=new KeyboardEvent(t,{key:key,code:key,keyCode:code,which:code,bubbles:true});" +
+            "try{Object.defineProperty(k,'keyCode',{get:function(){return code;}});Object.defineProperty(k,'which',{get:function(){return code;}});}catch(x){}e.dispatchEvent(k);});}" +
             "function enter(e){if(!e)return;e.focus();['keydown','keypress','keyup'].forEach(function(t){" +
             "var k=new KeyboardEvent(t,{key:'Enter',code:'Enter',keyCode:13,which:13,bubbles:true});" +
             "try{Object.defineProperty(k,'keyCode',{get:function(){return 13;}});" +
@@ -233,7 +244,7 @@ public class DumpSubmissionActivity extends Activity {
     private static String withProjectLink(String description) {
         if (description.toLowerCase(java.util.Locale.US).contains("graffitihunter.net")) return description;
         String separator = description.trim().isEmpty() ? "" : "\n\n";
-        return description + separator + "Submitted by Dumpster Hunter Build 0.3.2 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.";
+        return description + separator + "Submitted by Dumpster Hunter Build 0.3.3 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.";
     }
 
     private static String q(String value) {

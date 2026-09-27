@@ -188,7 +188,7 @@ public class NativeQueueActivity extends Activity {
             String desc = String.format(Locale.US,
                 "Graffiti on/at a %s. %s. GPS coordinates at capture: %.7f, %.7f. " +
                 "Photo and marked location map are attached. " +
-                "Submitted by Graffiti Hunter Build 0.5.8 GraffitiHunter.net.",
+                "Submitted by Graffiti Hunter Build 0.5.9 GraffitiHunter.net.",
                 type, place, lat, lon);
             report.put("suggestedDescription", desc);
             report.put("exactLocationDescription", String.format(Locale.US,

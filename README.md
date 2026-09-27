@@ -14,8 +14,8 @@
 
 <p align="center">
   <a href="https://graffitihunter.net/">Project website</a> ·
-  <a href="https://github.com/ottobohn187/Graffiti-Hunter/releases/tag/graffiti-v0.5.8">Graffiti Hunter APK</a> ·
-  <a href="https://github.com/ottobohn187/Graffiti-Hunter/releases/tag/dumpster-v0.3.2">Dumpster Hunter APK</a>
+  <a href="https://github.com/ottobohn187/Graffiti-Hunter/releases/tag/graffiti-v0.5.9">Graffiti Hunter APK</a> ·
+  <a href="https://github.com/ottobohn187/Graffiti-Hunter/releases/tag/dumpster-v0.3.3">Dumpster Hunter APK</a>
 </p>
 
 ## Mission
@@ -48,9 +48,9 @@ Neither application contains or launches the Unity runtime.
 
 <table>
   <tr>
-    <td align="center"><strong>Graffiti Hunter 0.5.8</strong></td>
+    <td align="center"><strong>Graffiti Hunter 0.5.9</strong></td>
     <td align="center"><strong>Mapped review package</strong></td>
-    <td align="center"><strong>Dumpster Hunter 0.3.2</strong></td>
+    <td align="center"><strong>Dumpster Hunter 0.3.3</strong></td>
   </tr>
   <tr>
     <td><img src="docs/screenshots/graffiti-hunter-home.png" width="280" alt="Graffiti Hunter native Android home screen"></td>
@@ -67,8 +67,8 @@ together for later review.
 
 | Application | Version | Purpose | Source |
 | --- | ---: | --- | --- |
-| Graffiti Hunter | 0.5.8 | Graffiti evidence and reporting packages | [`GraffitiHunter/NativeAndroid`](GraffitiHunter/NativeAndroid) |
-| Dumpster Hunter | 0.3.2 | Illegal-dumping and bulky-item packages | [`DumpsterHunter/NativeAndroid`](DumpsterHunter/NativeAndroid) |
+| Graffiti Hunter | 0.5.9 | Graffiti evidence and reporting packages | [`GraffitiHunter/NativeAndroid`](GraffitiHunter/NativeAndroid) |
+| Dumpster Hunter | 0.3.3 | Illegal-dumping and bulky-item packages | [`DumpsterHunter/NativeAndroid`](DumpsterHunter/NativeAndroid) |
 
 Both applications support:
 
@@ -108,6 +108,6 @@ committed. Tested APKs are published through GitHub Releases.
 ## Project status
 
 These are beta field tools under active testing on modern Samsung Android
-hardware. The current standalone builds are Graffiti Hunter 0.5.8 and Dumpster
-Hunter 0.3.2. This independent project is not affiliated with, endorsed by, or
+hardware. The current standalone builds are Graffiti Hunter 0.5.9 and Dumpster
+Hunter 0.3.3. This independent project is not affiliated with, endorsed by, or
 operated by the City of San Diego.

@@ -284,7 +284,7 @@ public class NativeCaptureReviewActivity extends Activity {
         int clampedY = Math.max(0, Math.min(n - 1, y));
         HttpURLConnection connection = (HttpURLConnection)new URL(
             "https://tile.openstreetmap.org/" + zoom + "/" + wrappedX + "/" + clampedY + ".png").openConnection();
-        connection.setRequestProperty("User-Agent", "GraffitiHunter/0.5.8 (graffitihunter.net)");
+        connection.setRequestProperty("User-Agent", "GraffitiHunter/0.5.9 (graffitihunter.net)");
         connection.setConnectTimeout(10000); connection.setReadTimeout(10000);
         try (InputStream in = connection.getInputStream()) {
             return BitmapFactory.decodeStream(in);
@@ -299,7 +299,7 @@ public class NativeCaptureReviewActivity extends Activity {
         String description = String.format(Locale.US,
             "Graffiti on/at a Other. %s. GPS coordinates at capture: %.7f, %.7f. " +
             "Photo and marked location map are attached. " +
-            "Submitted by Graffiti Hunter Build 0.5.8 GraffitiHunter.net.",
+            "Submitted by Graffiti Hunter Build 0.5.9 GraffitiHunter.net.",
             place, latitude, longitude);
         JSONObject report = new JSONObject();
         report.put("id", id); report.put("capturedUtc", captureTime);

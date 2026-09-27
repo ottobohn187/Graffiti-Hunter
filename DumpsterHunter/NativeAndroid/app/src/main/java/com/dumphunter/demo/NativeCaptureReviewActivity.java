@@ -284,7 +284,7 @@ public class NativeCaptureReviewActivity extends Activity {
         int clampedY = Math.max(0, Math.min(n - 1, y));
         HttpURLConnection connection = (HttpURLConnection)new URL(
             "https://tile.openstreetmap.org/" + zoom + "/" + wrappedX + "/" + clampedY + ".png").openConnection();
-        connection.setRequestProperty("User-Agent", "DumpsterHunter/0.3.2 (graffitihunter.net)");
+        connection.setRequestProperty("User-Agent", "DumpsterHunter/0.3.3 (graffitihunter.net)");
         connection.setConnectTimeout(10000); connection.setReadTimeout(10000);
         try (InputStream in = connection.getInputStream()) {
             return BitmapFactory.decodeStream(in);
@@ -301,7 +301,7 @@ public class NativeCaptureReviewActivity extends Activity {
             "Video/security footage available: No. %s. " +
             "GPS coordinates at capture: %.7f, %.7f. " +
             "Photo and marked location map are attached. " +
-            "Submitted by Dumpster Hunter Build 0.3.2 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.",
+            "Submitted by Dumpster Hunter Build 0.3.3 (home made app), the Graffiti Hunter wingman. GraffitiHunter.net.",
             place, latitude, longitude);
         JSONObject report = new JSONObject();
         report.put("id", id); report.put("capturedUtc", captureTime);
